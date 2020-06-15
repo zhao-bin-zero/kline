@@ -1,0 +1,6 @@
+node_modules
+dist
+dist.tar
+.vscode
+.DS_Store
+.tmp
