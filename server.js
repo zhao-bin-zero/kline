@@ -23,6 +23,7 @@ router.get('*', async ctx => {
   try {
     ctx.body = await new Promise((resolve, reject) => {
       render.renderToString({url: ctx.url}, (err, html) => {
+
         if (err && err.code === 404) {
           resolve("Page Not Found");
         }

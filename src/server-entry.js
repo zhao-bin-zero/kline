@@ -8,11 +8,12 @@ export default (context) => {
   
     // 跳转时路由可能是异步加载的
     router.push(context.url);
-
+    
     // 路由有可能懒加载，需要等待加载完成
     router.onReady(() => {
       // 前端如果没有配置路由 应该返回 404 页面
       const matchComponents = router.getMatchedComponents(); // 获取匹配的组件个数
+      
       if (!matchComponents.length) {
         // 交给 server.js 处理 404
         return reject({code: 404});
