@@ -1,10 +1,17 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, '../dist')
+  },
+  resolve: {
+    extensions: ['.js', '.vue', '.css', '.scss'],
+    alias: {
+      '@': path.resolve(__dirname, '../src'),
+    }
   },
   module: {
     rules: [
@@ -27,10 +34,25 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader'
+      },
+      {
+        test: /\.(jpe?g|png|bmp|gif|svg)/i,
+        use:[{
+            loader:'url-loader',
+            options: {
+              limit: 8 * 1024,
+              name: '[name].[contenthash:8].[ext]',
+              outputPath: 'images',
+              publicPath: '/images'
+            }
+        }]
       }
     ]
   },
   plugins: [
+    // new CleanWebpackPlugin({
+    //   cleanOnceBeforeBuildPatterns: ['**/*']
+    // }),
     new VueLoaderPlugin()
   ]
 }

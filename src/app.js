@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import createRouter from './createRouter';
 import createStore from './createStore';
+import './assets/styles/base.css';
 
 export default () => {
   let router = createRouter();
