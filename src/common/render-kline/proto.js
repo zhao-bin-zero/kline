@@ -5,17 +5,18 @@ import updateData from './core';
 import loadingGif from '@/assets/images/loading.gif';
 
 export default function (klineProto) {
-  klineProto.prototype.resetCanvas = function() {
+  klineProto.prototype.resetCanvas = function () {
     this.canvas.width = this.actualWidth * this.sharpness;
     this.canvas.height = this.actualHeight * this.sharpness;
-    this.canvas.style.height = this.canvas.height / this.sharpness + 'px';
-    this.canvas.style.width = this.canvas.width / this.sharpness + 'px';
+    //TODO
+    this.canvas.style.height = this.actualHeight + 'px';
+    this.canvas.style.width = this.actualWidth + 'px';
     this.centerSpace = this.canvas.height - (BOTTOM_SPACE + TOP_SPACE) * this.sharpness;
     // 将canvas原点坐标转换到右上角
     transformOrigin.call(this);
     // base settings
-    this.ctx.lineWidth = LINE_WIDTH*this.sharpness;
-    this.ctx.font = `${12*this.sharpness}px Arial`;
+    this.ctx.lineWidth = LINE_WIDTH * this.sharpness;
+    this.ctx.font = `${12 * this.sharpness}px Arial`;
     // 还原之前滚动的距离
     this.ctx.translate(-this.movingRange * this.sharpness, 0);
   };
@@ -70,12 +71,12 @@ export default function (klineProto) {
   klineProto.prototype.scaleKLine = function (scaleTimes) {
     if (this.loadingStatus) return;
     let oldTotalLen = this.totalWidth;
-    this.blockWidth += scaleTimes*2;
+    this.blockWidth += scaleTimes * 2;
     this.processParams();
     // 根据新blockWidth, 先重新计算总宽度
     computeTotalWidth.call(this);
     // 再根据推导公式计算出diffRange, 也就是需要移动的距离
-    let newRange = (this.movingRange*this.sharpness*this.totalWidth+this.canvas.width/2*this.totalWidth-this.canvas.width/2*oldTotalLen)/oldTotalLen/this.sharpness;
+    let newRange = (this.movingRange * this.sharpness * this.totalWidth + this.canvas.width / 2 * this.totalWidth - this.canvas.width / 2 * oldTotalLen) / oldTotalLen / this.sharpness;
     let diffRange = newRange - this.movingRange;
     // 最后调用函数去移动图表, 重新绘制
     this.translateKLine(diffRange);
@@ -85,7 +86,7 @@ export default function (klineProto) {
   klineProto.prototype.translateKLine = function (range) {
     if (this.loadingStatus) return;
     this.movingRange += parseInt(range);
-    let maxMovingRange =  (this.totalWidth - this.canvas.width) / this.sharpness + this.blockWidth;
+    let maxMovingRange = (this.totalWidth - this.canvas.width) / this.sharpness + this.blockWidth;
     if (this.totalWidth <= this.canvas.width || this.movingRange <= 0) {
       // 到了最右边
       this.movingRange = 0;
@@ -115,7 +116,7 @@ export default function (klineProto) {
    * @param {Boolean} reloadData 是否重新加载数据
    * @param {Fn} callback 回调函数 加载更多数据
    */
-  klineProto.prototype.updateHistoryQuote = function ({data, type = 60, reloadData = false, callback}) {
+  klineProto.prototype.updateHistoryQuote = function ({ data, type = 60, reloadData = false, callback }) {
     if (reloadData) this.dataArr = [];
     this.callbackMore = callback;
     let images = this.cBox.getElementsByTagName('img');
@@ -131,7 +132,7 @@ export default function (klineProto) {
   }
 }
 // 把实时报价对接到历史报价数据(dataArr)中
-function pushQuoteInData (quote) {
+function pushQuoteInData(quote) {
   if (this.loadingStatus) return;
   this.lastDataTimestamp = this.lastDataTimestamp || this.dataArr[0][TIME_INDEX];
   let diffMinutes = (quote[TIME_INDEX] - this.lastDataTimestamp) / 60; //当前的实时报价比较上一个报价多出的分钟数

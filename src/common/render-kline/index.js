@@ -31,7 +31,7 @@ class RenderKLine {
     this.fontColor = options.fontColor || '#666666';
     this.lineColor = options.lineColor || '#DDDDDD';
     this.digitsPoint = options.digitsPoint || 2; //报价的digits (有几位小数)
-    this.horizontalCells = options.horizontalCells || 5; //水平方向切割多少格子 (中间虚线数 = n - 1)
+    this.horizontalCells = options.horizontalCells || 5; //垂直方向切割多少格子 (中间虚线数 = n - 1)
     this.crossLineStatus = options.crossLineStatus || false; //鼠标移动十字线显示状态
     //basic params
     this.totalWidth = 0;  //总宽度

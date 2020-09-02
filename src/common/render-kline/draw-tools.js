@@ -5,7 +5,7 @@ import { toDou, getDate } from '../utils';
 // 切换坐标系走向 (原点在左上角 or 右上角)
 export function transformOrigin () {
   this.ctx.translate(this.canvas.width, 0);
-  this.ctx.scale(-1, 1);
+  this.ctx.scale(-1, 1);  // 绘制其水平镜像
 }
 // 计算minPrice & maxPrice
 export function computeSpaceY () {
